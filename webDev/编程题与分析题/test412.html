@@ -1,0 +1,73 @@
+<script>
+function GetMaxStaffs( pos ) {
+    // write code here
+    var max = 0, sum = 0
+    var arr = new Array(), temp
+    for(let i = 0; i < pos.length; i++) {
+        arr[i] = new Array()
+        for(let k = 0; k < pos[i].length; k++) {
+            arr[i][k] = '1'
+        }
+    }
+    temp = arr
+    console.log(arr)
+
+    for(let i = 0; i < pos.length; i++) {
+        debugger
+        arr = temp
+        for(let j = 0; j < pos[i].length; j++) {
+            if(pos[i][j] == '.' && arr[i][j] == '1') {
+                sum += 1
+                if(i !== 0 && j !== 0) {
+                    arr[i-1][j] = '0'
+                    arr[i][j-1] = '0'
+                } else if(i !== pos.length-1 && j !== pos[i].length-1) {
+                    arr[i+1][j] = '0'
+                    arr[i+1][j+1] = '0'
+                }
+                
+            }
+        }
+        max = Math.max(max, sum)
+    }
+    return max
+}
+var pos = [['*','.','*','*','.'], ['*','.','*','*','*'], ['*','.','*','*','.']]
+GetMaxStaffs(pos)
+
+function fn (name) {
+    console.log(name + ':' + this.mesg)
+}
+const mes = {
+    mesg: 23
+}
+fn.call(mes, 'yes')
+
+var call = function (context, args) {
+    var context = context || window
+    // context 必须是对象
+    context instanceof Object ? context : {}
+
+    context.fn = this
+    const result = context.fn(...args)
+    delete context.fn
+    return result
+}
+var apply = function (context, args) {
+    if (!(args instanceof Object)) {
+        throw new TypeError('')
+    }
+    // 非数组以外的都为空
+    if (!(Array.isArray(args))) {
+        args = []
+    }
+
+    var context = context || window
+    context instanceof Object ? context : {}
+
+    context.fn = this
+    const result = context.fn(...args)
+    delete context.fn
+    return result
+}
+</script>

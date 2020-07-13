@@ -1,0 +1,28 @@
+<script>
+    var premutation = function(target, size, origin) {
+        //存储最后返回的值
+        var arr = []
+        function setOrigin(target, num, origin) {
+            if(num === 1) {
+                
+                for(let i=0; i<target.length; i++) {
+                    var tmp = origin.slice()
+                    tmp.push(target[i])
+                    arr.push(tmp)
+                }
+            } else {
+
+                num -= 1
+                for(let i = 0; i < target.length; i++) {
+                    var tem = origin.slice()
+                    tem.push(target[i])
+                    var newTarget = target.slice()
+                    newTarget.splice(i,1)
+                    setOrigin(newTarget, num, tem)
+                }
+            }
+        }
+        setOrigin(target, size, origin)
+        return arr
+    }
+</script>

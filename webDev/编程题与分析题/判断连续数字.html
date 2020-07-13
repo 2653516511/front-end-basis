@@ -1,0 +1,25 @@
+<!-- 
+原数组：
+    [1,2,3,4,6,8,9,10]
+期望结果：
+    [“1-4”,6,“8-10”]
+-->
+
+<script>
+    var lineNumber = function(arr) {
+        var array = [], start
+        arr.forEach((item, index) => {
+            if(item + 1 === arr[index+1] && item - 1 !== arr[index-1]) {
+                start = item      //开始的数字
+            } else if (item + 1 !== arr[index+1] && item - 1 === arr[index-1]) {        //结束数字
+                array.push(start + '-' + item)
+            } else if (item + 1 !== arr[ index + 1 ] && item - 1 !== arr[index-1]) {
+                array.push(item)
+            }
+        })
+        return array
+    }
+    
+    var arr = [1,2,3,4,6,8,9,10]
+    console.log(lineNumber(arr))
+</script>

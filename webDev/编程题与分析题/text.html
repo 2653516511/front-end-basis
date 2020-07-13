@@ -1,0 +1,89 @@
+<script>
+    function stringCom(str) {
+        //考虑边界
+        if(str.length == 0) return 
+        
+        var reg = new RegExp(/^[tx](?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{12}$/)
+        return reg.test(str)
+    }
+    var str = 'tx2222222222'
+    stringCom(str)
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*背景层*/
+        #popLayer {
+            display: none;
+            background-color: #B3B3B3;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 10;
+        }
+ 
+        /*弹出层居中*/
+        #popBox {
+            display: none;
+            background-color: #FFFFFF;
+            z-index: 11;
+            width: 200px;
+            height: 200px;
+            position:fixed;
+            justify-content: center;
+            align-items: center;
+        }
+ 
+ 
+        /*确认按钮*/
+        #popBox .confirm a {
+            text-decoration: none;
+            color: #2D2C3B;
+        }
+ 
+    </style>
+</head>
+
+<body>
+<input type="button" id="popBox" οnclick="popBox()">
+<div id="popLayer"></div>
+<div id="popBox">
+    <div class="confirm">
+        <a href="" οnclick="confirm()">确定</a>
+    </div>
+    <div id="content">这是提示内容</div>
+</div>
+<script>
+    /*点击弹出按钮*/
+    function popBox() {
+        console.log('ni')
+        var popBox = document.getElementById("popBox");
+        var popLayer = document.getElementById("popLayer");
+        popBox.style.display = "block";
+        popLayer.style.display = "block";
+    };
+ 
+    /*点击确定按钮*/
+    function confirm() {
+        var popBox = document.getElementById("popBox");
+        var popLayer = document.getElementById("popLayer");
+        popBox.style.display = "none";
+        popLayer.style.display = "none";
+    }
+</script>
+</body>
+<body>
+    
+</body>
+</html>
+<!doctype html>
+<html lang="en">
+
+</html>

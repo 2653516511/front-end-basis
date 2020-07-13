@@ -1,0 +1,74 @@
+<!-- 之所以写成html格式的，是因为该文件可以直接在浏览器中运行，方便纠正
+ -->
+
+ <script>
+
+    class PromiseNew {
+        constructor(fn) {
+            this.state = 'PENDING';
+            this.doneList = []      //成功处理函数列表
+            this.failList = []      //失败处理函数列表
+            fn(this.resolve.bind(this), this.reject.bind(this))
+        }
+
+        //注册成功处理函数
+        done(handle) {
+            if(typeof handle === 'function') {
+                this.doneList.push(handle)
+            } else {
+                throw new error('no callback function')
+            }
+            return this
+        }
+        //注册失败处理函数
+        fail(handle) {
+            if(typeof handle === 'function') {
+                this.failList.push(handle)
+            } else {
+                throw new error('no callback function')
+            }
+            return this
+        }
+        //同时注册成功和失败处理函数
+        then(success, fail) {
+            this.done(success || function() {}).fail(fail || function() {})
+            return this
+        }
+        //一个处理函数注册到成功和失败
+        always(handle) {
+            this.done(handle || function() {}).fail(handle || function() {})
+            return this
+        }
+        //更新state为：RESOLVED，并执行成功处理队列
+        resolve() {
+            this.state = 'RESOLVED'
+            let args = Array.prototype.slice.call(arguments)
+            setTimeout(function() {
+                this.doneList.forEach((item, index, arr) => {
+                    item.apply(null, args)
+                    arr.shift()
+                })
+            }.bind(this) , 200)
+        }
+        //更新state为：REJECTED，并执行失败处理队列
+        reject() {
+            this.state = 'REJECTED'
+            let args = Array.prototype.slice.call(arguments)
+            setTimeout(function () {
+                this.failList.forEach((item, index, arr) => {
+                    item.apply(null, args)
+                    arr.shift()
+                })
+            }.bind(this), 200)
+        }
+    }
+
+    new PromiseNew((resolve, reject) => {
+        resolve('resolve')
+    }).done((res) => {
+        console.log(res)
+    }).fail((res) => {
+        console.log(res)
+    })
+
+ </script>

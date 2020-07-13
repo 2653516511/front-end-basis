@@ -1,0 +1,42 @@
+<!-- 创建子类child, 使用原型和构造函数的方法继承父类parent的方法,并调用say函数说出姓名和年龄 -->
+<script>
+    class Parent {
+        constructor(name, age) {
+            this.name = name
+            this.age = age
+        }
+        say() {
+            console.log('name:', this.name)
+        }
+    }
+
+    class child extends Parent{
+        constructor(name, age, sex) {
+            super(name, age)
+            this.sex = sex
+        }
+        // say() {
+        //     console.log(super.say() + this.sex + this.age)
+        // }
+    }
+    var a = new child('ni', 2,'male')
+    console.log(a.say())
+</script>
+<script>
+    function parent(name, age) {
+        this.name = name
+        this.age = age
+        this.say = function() {
+            console.log(this.name + this.age)
+        }
+    }
+    function child(name, age) {
+        this.name = name
+        this.age = age
+    }
+
+    child.prototype = new parent()
+    var b = new child('hao', 23)
+    console.log(b.say())
+
+</script>

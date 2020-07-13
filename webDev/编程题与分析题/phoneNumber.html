@@ -1,0 +1,41 @@
+<script>
+    var letterCombinations = function(digits) {
+    const maps = {
+        2: "abc",
+        3: "def",
+        4: "ghi",
+        5: "jkl",
+        6: "mno",
+        7: "pqrs",
+        8: "tuv",
+        9: "wxyz"
+    }
+    const res = [];
+    for (let num of digits) {
+        let w = maps[num];
+        debugger
+        if (res.length > 0) {
+            let tmp = [];
+            for (let i in res) {
+                let wl = w.length;
+                debugger
+                for (let j = 1; j < wl; j++) {
+                    debugger
+                    tmp.push(res[i] + w[j])
+                }
+                debugger
+                res[i] += w[0];
+            }
+            debugger
+            res.push(...tmp)
+        } else {
+            debugger
+            res.push(...w);
+        }
+    }
+    return res;
+
+};
+
+letterCombinations('23')
+</script>

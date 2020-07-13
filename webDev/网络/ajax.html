@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .btn{
+            height:30px;
+            width:100px;
+            background:red;
+            margin:10px 0;
+            text-align:center;
+            line-height:30px;
+            color: burlywood;
+        }
+    </style>
+</head>
+<body>
+    <div class="postbtn btn">POST请求</div>
+    <div class="getbtn btn">GET请求</div>
+</body>
+    <script type="text/javascript">
+        //post请求
+        document.querySelector('postbtn').onclick = function() {
+            var xhr = new XMLHttpRequest()
+            var obj = {
+                name: 'name',
+                age: 13
+            }
+            xhr.open('POST', 'url', true)
+            xhr.setRequestHeader("token", "header-token-value")
+            xhr.send(JSON.stringify(obj))
+            xhr.onreadystatechange = function() {
+                console.log('post')
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    console.log('post', xhr.responseText)
+                }
+            }
+        }
+
+        // get请求
+        document.querySelector('getbtn').onclick = function() {
+            var xhr = new XMLHttpRequest()
+            //get方法带参数是将参数下在url里面传过去给后端
+            xhr.open('GET', "http://......?name='name'&age=13", true)
+            xhr.setRequestHeader('token', 'header-token-value')
+            xhr.send()
+            xhr.onreadystatechange = function() {
+                console.log('get')
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    console.log('get', xhr.responseText)
+                }
+            }
+        }
+    </script>
+</html>
+
+<script>
+    
+</script>

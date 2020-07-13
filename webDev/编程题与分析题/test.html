@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id='root'>
+        <span>123
+            <a href="#">
+                sdsd
+            </a>
+            <div>sdsd<a>这是一个a标签</a></div>
+        </span>
+        <span>456
+            <p>这是一个p标签</p>
+        </span>
+    </div>
+</body>
+</html>
+<script>
+    var fangTest = function (fun) {
+        var time 
+        return function () {
+            let _this = this
+            clearTimeout(time) 
+            time = setTimeout(function() {
+                fun.apply(_this, arguments)
+            }, 200)
+        }
+    }
+
+    var jieTest = function(fun, delay) {
+        var time = true
+        return function() {
+            let _this = this
+            if(!time) return
+            time = false
+            let arg = arguments
+            setTimeout(function() {
+                fun.apply(_this, arguments)
+                time = true
+            }, delay)
+            // if(time) {
+            //     clearTimeout(time)
+            // } 
+        }
+    }
+
+    var widthTravel = function (tree) {
+        let queue = [], nodeList = []
+        tree && queue.push(tree)
+        while (queue.length) {
+            let item = queue.shift()
+            nodeList.push(item)
+            for (let i = 0; i < item.children.length; i++) {
+                queue.push(item.children[i])
+            }
+        }
+        return nodeList
+    }
+
+    var deepTravel = function (tree) {
+        let stack = [], nodeList = []
+        tree && stack.push(tree)
+        while (stack.length) {
+            let item = stack.pop()
+            nodeList.push(item)
+            let chil = item.children
+            for (let i = chil.length - 1; i >= 0; i--) {
+                stack.push(chil[i])
+            }
+        }
+        return nodeList
+    }
+    // let root = document.getElementById('root')
+    // console.log(deepTravel(root))
+
+    var debounce = function (handler, delay) {
+        var delay = delay || 1000
+        let timer
+        return function () {
+            clearTimeout(timer)
+            let _this = this, arg = arguments
+            timer = setTimeout(() => {
+                handler.apply(_this, arg)
+            }, delay);
+        }
+    }
+    var throttle = function (handler, wait) {
+        var wait = wait || 1000
+        let lastTime = 0
+        return function () {
+            let _this = this, arg = arguments
+            let nowTime = new Date().getTime()
+            if (nowTime - lastTime >= wait) {
+                handler.apply(_this, arg)
+                lastTime = nowTime
+            }
+        }
+    }
+
+    // origin--被拷贝的对象；target--拷贝之后的对象
+    var deepClone = function (origin, target) {
+        // 若origin不是对象，直接返回
+        if (typeof(origin) !== 'Object' || target) {
+            // typeof(undefined) == 'undefined'
+            return origin
+        }
+
+        for (let prop in origin) {
+            // 只拷实例上的，不拷原型上的
+            if (origin.hasOwnProperty(prop)) {
+                if (typeof(origin[prop]) === 'Object' && origin[prop]) {
+                    if (origin[prop] instanceof Array) {
+                        target[prop] = []
+                        deepClone (origin, target[prop])
+                    } else {
+                        target[pop] = {}
+                        deepClone (origin, target[pop])
+                    }
+                } else {
+                    target[prop] = origin[prop]
+                }
+            } 
+        }
+        return target
+    }
+
+    new Promise((resolve, reject) => {
+
+    }).then (value => console.log(value))
+</script>

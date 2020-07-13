@@ -1,0 +1,42 @@
+
+<script>
+    function debounce(fn) {
+        //标记一个存放返回值的
+        let timeout = null
+
+        //返回一个函数
+        return funciton() {
+            //输入时清除前一个setTimeout
+            clearTimeout(timeout)
+
+            //新建一个setTimeout，以保证间隔时间内，函数fn不会再次执行
+            timeout = setTimeout(()=>{
+                fn.apply(this,arguments)
+            },500)
+        }
+
+    }
+    function sayHi() {
+        console.log('防抖ok')
+    }
+    let box = document.getElementById('box')
+    box.addEventListener('click', debounce(sayHi))
+</script>
+<script>
+    //稀释执行频率
+    function throttle(fn) {
+        //标记一个是否时间到了，要执行下一次的点击操作
+        let canRun = true
+
+        return function(){
+            //检查标记是否为true。若为false，则return
+            if(!canRun) return
+
+            //
+            setTimeout(() => {
+                fn.apply(this, arguments)
+                canRun = true
+            },500)
+        }
+    }
+</script>

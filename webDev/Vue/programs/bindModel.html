@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #listBox {
+            width: 900px;
+            margin: 0 auto;
+        
+        }
+        p{
+            text-align: left;
+            line-height:30px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        p input{
+            border:solid 1px #ddd;
+            line-height:30px
+        }
+    </style>
+</head>
+<body>
+    <script src="vue.js"></script>
+    <!-- <template> -->
+        <div id="listBox">
+          <p>v-model动态监听输入的值{{value1}} <br /></p> 
+          <p>使用v-model实现的监听：<input type="text" v-model="value1" ><br/></p>
+          <p>v-bind:value和v-on:input动态监听输入的值{{value2}} <br /></p>
+          <p>模拟v-model的方法：
+            <input type="text" v-bind:value="value2" v-on:input="value2 = $event.target.value" >
+          </p>
+        </div>
+    <!-- </template> -->
+    
+    <script>
+        var app = new Vue ( {
+            name: "listBox",
+            el: '#listBox',
+            data() {
+                return {
+                value1:'1111',
+                value2:'2222',
+                };
+            },
+            methods: {
+                
+            },
+            mounted () {
+            
+            }
+        });
+    </script>
+        
+      
+</body>
+</html>

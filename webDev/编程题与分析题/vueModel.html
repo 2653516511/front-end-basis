@@ -1,0 +1,80 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!-- v-model指令用来在input、select、text、checkbox、radio等表单控件元素上创建双向数据绑定的。根据控件类型v-model自动选取正确的方法更新元素 。它负责监听用户的输入事件以更新数据。 -->
+
+<div id="app">
+    账号：<input type="text" name="userid1" id="userid1" :value="userid1">
+    账号：<input type="text" name="userid2" id="userid2" v-model="userid2">
+    <!-- 验证单向数据绑定 -->
+    <button @click='fn' type="button">test</button>
+    <!-- 验证双向数据绑定 -->
+    <button @click='change' type="button">change</button>
+</div>
+<script type="text/javascript">
+    new Vue({
+        el:"#app",
+        data:{
+            userid1:"我是userid1",
+            userid2:"我是userid2",
+        },
+        methods:{
+            fn(){
+                console.log(this.userid1,this.userid2)
+            },
+            change(){
+                this.userid1="我是改过的userid"
+                console.log('change',this.userid1,this.userid2)
+            }
+        }
+    })
+</script>
+
+<!-- 利用v-model模仿百度搜索瀑布流的demo -->
+<div id="app" >
+	<input type="search" name='search1' id="search1" v-model="search" @input='searchone'>
+	<div v-for="obj in arr">{{obj}}</div>
+</div>
+    
+<script>
+	var vm = new Vue({
+            el: "#app",
+            data: {
+                search:'',
+                arr: []
+            },
+            methods: {
+                searchone(){
+                    var url = `http://suggestion.baidu.com/su?wd=${this.search}&cb=?`
+                    $.getJSON(url,(data)=>{
+                        this.arr = data.s;
+                    })
+                }
+            }
+        })
+</script>
+
+
+<!-- v-model表单补充
+select下拉表单
+单选时：绑定到一个字符串。
+①注意：这里v-model是绑定在select标签上。
+②当option没有设置value属性时，JS数据中的selected的值为option标签的值。
+③当option里面设置value值时，JS数据中的selected的值为option标签中value属性的值。 -->
+<div id="app" style="width: 500px; height: 500px; background-color: burlywood;">
+    <select v-model="selected">
+          <option disabled value="">请选择</option>
+          <option value="AA">A</option>
+          <option>B</option>
+          <option>C</option>
+    </select>
+    <span>Selected: {{ selected }}</span>
+  </div>
+  <script>
+      new Vue({
+        el: '#app',
+        data: {
+          selected: ''
+        }
+      })
+  </script>
+  

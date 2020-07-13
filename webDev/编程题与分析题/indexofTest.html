@@ -1,0 +1,83 @@
+<!-- <script>
+    // var reverse = function(x) {
+    //     var result, temp = 2**31
+    //     debugger
+    //     result = (x > 0 ? 1 : -1) * (x.toString().split('').filter(i => i!=='-').reverse().join(''))
+    //     debugger
+    //     if(result < (-temp) || result > (temp - 1)) {
+    //         return 0
+    //     } else{
+    //         return result
+    //     }
+    // };
+    // reverse(-123)
+
+    var longestCommonPrefix = function(strs) {
+    var arr = strs[0], stri = ''
+    for(let i = 0; i < arr.length; i++) {
+        debugger
+        if(arr[i] === strs[1][i]) {
+            debugger
+            for(let j = 1; j < strs.length; j++) {
+                if(strs[j][i] !== arr[i]) {
+                    
+                    return ''
+                }
+            }
+            debugger
+            stri += arr[i]
+        } else{
+            debugger
+            return stri
+        }
+    }
+    return ''
+    
+};
+longestCommonPrefix(["flower","flow","flight"])
+</script> -->
+
+<html>
+    <head>
+        <style>
+            .box,.box3
+            {
+                width:0px;
+                height:0px;
+
+                border-top:50px solid rgba(0,0,0,0);
+                border-right:50px solid  rgba(0,0,0,0);
+                border-bottom:50px solid green;
+                border-left:50px solid  rgba(0,0,0,0);
+
+                /* margin-bottom:10px; */
+                
+            }
+            .box {
+                display: inline-block;
+                transform: translate(55px);
+            }
+            .box3 {
+                display: inline-block;
+                transform: translate(-55px);
+            }
+
+            .box2
+            {
+                width:50px;
+                height:50px;
+                background-color:green;
+                display: inline-block;
+                }
+        </style>
+    </head>
+
+    <body>
+        <div class='box'>
+        </div>
+        <div class='box2'>
+        </div>
+        <div class='box3'>
+        </div>
+    </body>
+</html>

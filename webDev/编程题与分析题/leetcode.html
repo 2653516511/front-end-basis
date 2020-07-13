@@ -1,0 +1,51 @@
+<script>
+var longestPalindrome = function(s) {
+    //考虑边界情况
+    if(s.length === 0) return 0
+    if(s.length === 1) return s
+    if(s.length === 2) {
+        if(s[0] === s[1]){
+            return s
+        } else{
+            return 0
+        }
+    }
+    s = s.split('')
+    var mid = Math.floor(s.length/2), left = mid - 1, right = mid + 1
+    var arr = []
+    arr[mid] = s[mid]
+    var compare = (left, right) => {
+        while(left >= 0 && right <= s.length) {
+            if(s[left] === s[right]){
+                debugger
+                arr[left] = s[left]
+                arr[right] = s[right]
+                left--
+                right++
+            } else {
+                return arr.join('')
+            }
+        }
+    }
+    debugger
+    if(s[left] === s[mid]) {
+        arr[left] = s[left]
+        left--
+        debugger
+        compare(left, right)
+    } else if(s[right] === s[mid]) {
+        debugger
+        arr[right] = s[right]
+        right++
+        compare(left, right)
+    } else if(s[left] === s[right]) {
+        compare(left, right)
+    } else {
+        return arr.join('')
+    }
+    return arr.join('')
+};
+
+var s = "babad"
+longestPalindrome(s)
+</script>

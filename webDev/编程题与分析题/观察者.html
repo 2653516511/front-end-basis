@@ -1,0 +1,59 @@
+<script>
+    class observe {
+        constructor() {
+            this.handles = {}
+        }
+
+        //订阅事件
+        on(eventType, handle) {
+            if(!this.handles[eventType]) {
+                this.handles[eventType] = []
+            }
+            if(typeof handle === 'function') {
+                this.handles[eventType].push(handle)
+            } else {
+                throw new error('no callback function')
+            }
+            return this
+        }
+        //发布事件
+        emit(eventType, ...args) {
+            if(this.handles.hasOwnProperty(eventType)) {
+                this.handles[eventType].forEach((item, index, arr) => {
+                    item.apply(null, args)
+                });
+            } else{
+                throw new error('${eventType} 未注册')
+            }
+            return this
+        }
+        //删除事件
+        delete(eventType, handle) {
+            if(!this.handles.hasOwnProperty(eventType)) {
+                throw new error('${eventType} 未注册')
+            } else if(typeof handle != 'function') {
+                throw new error('no callback function')
+            } else{
+                this.handles[eventType].forEach((item, index, arr) => {
+                    if(item == handle) {
+                        arr.splice(index, 1)
+                    }
+                })
+            }
+            return this
+        }
+    }
+
+    //测试
+    var callback = function(){
+        console.log('how are you')
+    }
+    let pub = new observe()
+    pub.on('say', (...args) => {
+        console.log(args.join(' '))
+    }).on('say', callback)
+    pub.emit('say', 'what', 'your', 'name')
+    pub.delete('say', callback)
+    
+    pub.emit('say', 'good', 'morning')
+</script>

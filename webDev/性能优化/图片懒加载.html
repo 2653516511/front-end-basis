@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //首先获得可视区域的高度
+        var viewHeight = document.documentElement.clientHeight
+
+        function lazyLoad() {
+            //然后获得所有要懒加载的图片
+            var eles = document.querySelectorAll('img[data-original][lazyload]')
+            Array.prototype.forEach.call(eles, function(item, index) {
+                var rect
+                if(item.dataset.original === '') return
+                rect = item.getBoundingClientRect()
+                //图片进入可视区就开始加载
+            })
+        }
+    </script>
+</body>
+</html>

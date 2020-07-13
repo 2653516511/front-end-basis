@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <script src="https://unpkg.com/vue/dist/vue.js"></script> -->
+    <script src="vue.js"></script>
+
+    <div id="root">
+        <p>is this an hello world?</p>
+        <p>{{message}}</p>
+        <input v-model = 'message'/>
+    </div>
+
+    <script>
+        console.log('yes, my vue version is:', Vue.version)
+        var app = new Vue({
+            name: 'hello world',
+            el: '#root',
+            data () {
+                return{
+                    message: 'vue hello world'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<script>
+    var url = 'http://www.xiyanghui.com/product/list?id=123456&sort=discount#title'
+    var parseUrl = function (url) {
+        //创建一个a标签,首先将字符串转换成url
+        var a = document.createElement('a')
+        a.href = url
+        return {
+            source: url,
+            protocol: a.protocol.substring(0,a.protocol.length-1),
+            host: a.hostname,
+            port: a.port,
+            search: a.search,
+            parames: (() => {
+                var res = {}
+                var par = a.search.substr(1).split('&')
+                par.forEach(item => {
+                    res[item.split('=')[0]] = item.split('=')[1]
+                })
+                return res
+            })(),
+            file: a.pathname.split('/')[2],          //a.pathname.split('/') = ["", "product", "list"]
+            hash: a.hash.split('#')
+        }
+    }
+
+    parseUrl(url)
+</script>
