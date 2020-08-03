@@ -1,0 +1,62 @@
+<script>
+    // my
+    function intvalFun (handler, delay) {
+        // debugger
+        var delay = delay || 300
+        var timeInte = null
+        // var _this = this,
+        //     _args = arguments;
+
+        debugger
+        timeInte = setTimeout(function() {
+            // handler.apply(_this, _args)
+            handler()
+            // clearTimeout(timeInte)
+            intvalFun(handler, delay)
+        }, delay)
+
+        console.log('timeInte', timeInte)
+        return timeInte
+    }
+
+    function fu () {
+        console.log('1')
+    }
+    intvalFun(fu, 1000)
+    // console.log('res', res)
+</script>
+
+<script>
+    // you
+    var util = (function () {
+        // define intervalObj object, used to store intervalId map to real timeoutId
+        var intervalObj = {}
+        // intervalId will add 1 when _setInterval is used
+        var intervalId = 0
+
+        var _setInterval = function (fn, interval) {
+            var thisIntervalId = ++intervalId
+            function next () {
+                intervalObj[thisIntervalId] = setTimeout(function () {
+                    fn()
+                    next()
+                }, interval)
+            }
+            next()
+            return thisIntervalId
+        }
+        var _clearInterval = function (intervalId) {
+            clearTimeout(intervalObj[intervalId])
+        }
+        
+        return {setInterval: _setInterval, clearTimeout: _clearInterval}
+    })()
+
+    var intervalId = util.setInterval(function() {
+        console.log('a');
+    }, 1000)
+    // clear Interval in 10 seconds
+    setTimeout(function() {
+        util.clearInterval(intervalId)
+    }, 1000)
+</script>
