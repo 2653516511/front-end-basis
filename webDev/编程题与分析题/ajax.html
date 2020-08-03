@@ -1,0 +1,96 @@
+<script>
+   // var a = {
+    //        q: 1,
+    //        w: 3
+    //}
+    // a
+    console.log(a.q);
+    // $.ajax({
+    //     url:'...',
+    //     type:'get',
+    //     data: 
+    //     {
+    //         q:'q', 
+    //         h:'h'
+    //     },
+    //     dataType: 'json',
+    //     contentType: '',
+    //     success: function(data){
+    //         // 服务器返回响应
+    //     },
+    //     error: function(e) {
+
+    //     }
+    // })
+    
+    var b = (function (){
+        function ajax (options) {
+            console.log('options', options);
+            var options = options || {};
+                options.type = (options.type || 'GET').toUppercase;
+                options.dataType = options.dataType || 'json';
+                params = paramsFun (options.data)
+            let url = options.url
+
+            var xhr
+            if (window.XMLHttpRequest) {
+                xhr = new XMLHttpRequest()
+            } else if (window.ActiveXObject) {
+                xhr = new ActiveXObject('microsoft.XMLHTTP')
+            }
+            
+            if (options.type == 'GET') {
+                xhr.open('GET', url + '?' + params, true)
+                xhr.send(null)
+            } else if (options.type == 'POST'){
+                xhr.open('POST', url, true)
+                xhr.setRequestHeader('content-type', 'application/...')
+                xhr.send(params)
+            }
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    let status = xhr.status
+                    if ((status >= 200 && status < 300) || status == 304) {
+                        return xhr.success && xhr.success(xhr.responseText)
+                    } else {
+                        return xhr.error && xhr.error(status)
+                    }
+                }
+            }
+
+            //params deal
+            function paramsFun (data) {
+                let keys = Object.keys(data)
+                var res = []
+                if (keys.length) {
+                    keys.forEach((item) => {
+                        res.push(item + '=' + data[item])
+                    })
+                }
+                return res.join('&')
+            }
+        }
+        return {ajax}
+        // c:1
+    })()
+    b.ajax({
+        url:'...',
+        type:'get',
+        data: 
+        {
+            q:'q', 
+            h:'h'
+        },
+        dataType: 'json',
+        contentType: '',
+        success: function(data){
+            // 服务器返回响应
+        },
+        error: function(e) {
+
+        }
+    })
+    console.log(b.ajax);
+</script>
+//注释掉的是迷糊的时候，分析测试结构的过程。记住哈，你写的时候有几分钟的迷糊
