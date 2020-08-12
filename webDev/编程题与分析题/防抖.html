@@ -1,3 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 下载这段是测试fixed的高度坍塌 -->
+    <!-- <style type="text/css">
+        body,html,div{margin: 0;padding: 0;}
+        .div1{width: 100%;height: 40px;
+            background-color: yellow; opacity: 0.4;
+            position: fixed; top: 0;}
+        .div2{width: 100%;height: 80px;
+            background-color: red;
+            margin-top: 30px}
+      </style> -->
+</head>
+<body>
+    <!-- fixed测试 -->
+    <!-- <div> -->
+        <!-- <div class="div1"></div> -->
+        <!-- <div style="height: 30px; background-color: blue;"></div>
+    </div> -->
+    <!-- <div class="div2"></div> -->
+
+    <!-- 节流防抖测试 -->
+    <button id="click">click</button>
+    <!-- <input type="text" id="txt"> -->
+</body>
+</html>
+
+<script>
+
+    
+// function debounce (handler, delay) {
+//     var delay = delay || 300
+//     var timer = null
+
+//     return function () {
+//         var _this = this, arg = arguments
+//         clearTimeout(timer)
+//         timer = setTimeout(function () {
+//             // console.log('fun')
+//             handler.apply(_this, arg)
+//         }, delay)
+//     }
+// }
+
+function throttle (handler, delay) {
+    var delay = delay || 300
+    var lastTime = 0
+
+    return function () {
+        var _this = this, arg = arguments
+        var nowTime = new Date().getTime()
+        if (nowTime - lastTime >= delay) {
+            lastTime = nowTime
+            handler.apply(_this, arg)
+        }
+    }
+}
+
+// function throttle(func, duration) {
+//   let shouldWait = false
+//   return function (...args) {
+//     if (!shouldWait) {
+//       func.apply(this, args)
+//       shouldWait = true
+//     //   debugger
+//       setTimeout(function () {
+//         shouldWait = false
+//       }, duration)
+//     }
+//   }
+// }
+var count = 1
+function fn () {
+    console.log(count++);
+}
+var button = document.getElementById('click')
+button.addEventListener('click', throttle(function () {
+    fn()
+  }, 500)
+)
+
+
+</script>
 
 <script>
     function debounce(fn) {
