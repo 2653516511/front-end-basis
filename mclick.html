@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="eventBtn">move on</button>
+
+    <script>
+        const idBtn = document.querySelector('#eventBtn')
+        // console.log(idBtn);
+        idBtn.addEventListener('mouseover', throttles(showMess, 1000, {leading: true, trailing: true}), false)
+
+        let count = 0
+        function showMess() {
+            console.log(count++);
+        }
+        function debounce(fn, delay, now) {
+            var delay = delay || 2000, time = null
+
+            return function() {
+                let _this = this, args = arguments
+                clearTimeout(time)
+                // run now
+                if(now) {
+                    // control delay with time or other param
+                    if(!time) {
+                        fn.apply(_this, args)
+                    }
+                    time = setTimeout(() => {
+                        time = null
+                    }, delay)
+                } else {        // run delay later
+                    time = setTimeout(() => {
+                        fn.apply(_this, args)
+                    }, delay)
+                }
+
+            }
+        }
+
+        function throttles(func, wait, options) {
+            var wait = wait || 1000
+            let oldTime = 0, timeout = null
+            let context, args
+
+            if(!options) options = {}
+            let late = function() {
+                oldTime = options.leading === false ? 0 : new Date().valueOf()
+                func.apply(context, args)
+                timeout = 0
+            }
+            
+            return function() {
+                context = this, args = arguments
+                let nowTime = new Date().valueOf()
+                // leading false
+                if(options.leading === false && !oldTime) {
+                    oldTime = nowTime
+                }
+                // leading true
+                if(nowTime - oldTime >= wait) {
+                    if(timeout) {
+                        clearTimeout(timeout)
+                        timeout = 0
+                    }
+                    
+                    oldTime = nowTime
+                    func.apply(context, args)
+                } 
+                // training true
+                if(!timeout && options.trailing !== false) {
+                    
+                    timeout = setTimeout(late, wait)
+                }
+
+
+            }
+        }
+    
+        function throttle(fn, await) {
+            let oldTime = new Date().getTime()
+            let time = null
+            var await = await || 1000
+
+            return function() {
+                let newTime = new Date().getTime()
+                let _this = this, args = arguments
+
+                clearTimeout(time)
+                if(newTime - oldTime >= await) {
+                    oldTime = newTime
+                    fn.apply(_this, args)
+                } else {
+                    time = setTimeout(() => {
+                        fn.apply(_this, args)
+                    }, await)
+                }
+            }
+        }
+    </script>
+</body>
+</html>

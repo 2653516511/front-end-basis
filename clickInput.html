@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text">
+    <button >click</button>
+
+    <script>
+
+        const btn = document.querySelector('button')
+        console.log(btn.style.display);
+        btn.addEventListener('click', clickfn, false)
+        function clickfn() {
+            btn.style.visibility = 'hidden'
+            // btn.style.display = 'none'
+            // btn.disabled = true
+            setTimeout(() => {
+                btn.style.visibility = 'visible'
+                // btn.style.display = 'inline'
+                // btn.disabled = false
+            }, 1000)
+        }
+
+        const inpEv = document.querySelector('input')
+        // console.log('inp', inpEv);
+        inpEv.addEventListener('input', th(fn, 1000, {start: false, tail: true}), false)
+
+        let count = 0, timeout = null
+        let oldTime = 0
+        function th(fn, delay, options) {
+            
+            var delay = delay || 1000,
+                options = options || {}
+            let old = 0, timeout = null
+            return function() {
+                let now = new Date().getTime()
+                let _this = this, args = arguments
+                clearTimeout(timeout)
+                // old = options.start === false && !old ? now : 0
+                if(options.start === false && !old) {
+                    old = now
+                }
+                if(now - old >= delay) {
+                    fn.apply(_this, args)
+                    old = now
+                } else if (options.tail !== false) {
+                    timeout = setTimeout(() => {
+                        old = new Date().getTime()
+                        fn.apply(_this, args)
+                    }, delay)
+                } 
+            }
+            // let now = new Date().getTime()
+            // let wait = 1000
+            // if(now - oldTime >= wait) {
+            //     console.log(count++);
+            //     oldTime = now
+            // }
+        }
+        function de(fn, wait, immediate) {
+            var wait = wait || 1000
+            let timeout = null
+            return function() {
+                let _this = this, args = arguments
+                clearTimeout(timeout)
+                if(immediate) {
+                    // this ???
+                    if(!timeout) {
+                        fn.apply(_this, args)
+                    }
+                    timeout = setTimeout(() => {
+                        timeout = null
+                        // fn.apply(_this, args)
+                    }, wait)
+                } else {
+                    timeout = setTimeout(() => {
+                        fn.apply(_this, args)
+                    }, wait)
+                }
+
+            }
+            // clearTimeout(timeout)
+            // timeout = setTimeout(() => {
+            //     console.log(count++);
+            // }, 1000)
+            
+        }
+        function fn() {
+            console.log(count++);
+        }
+    </script>
+</body>
+</html>
