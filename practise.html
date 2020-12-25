@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        let strStr = function(str1, str2) {
+            // str1为空：-1； str1的长度小于str2：-1
+            if(!str1 || str1.length < str2.length) return -1
+            // str2为空：0
+            if(!str2) return 0
+            // 
+            for(let i = 0; i < str1.length - str2.length + 1; i++) {
+                let tem = str1.substr(i,str2.length)
+                if(tem === str2) {
+                    return i
+                }
+            }
+            return -1
+        }
+        let str1 = 'abcded', str2 = 'cd'
+        console.log(strStr(str1, str2));
+
+        /** 数组查找数据
+        let nums = [0,1,2,2,3,0,4,2], val = 2
+        function deleteVal(nums, val) {
+            if(nums.length < 1) return 0
+
+            nums.sort((a, b) => a-b)
+            for(let i = 1; i < nums.length; i++) {
+                if(nums[i] === 2) {
+                    nums.splice(i, 1)
+                    i--
+                    continue
+                }
+                if(nums[i] > val) {
+                    return nums.length
+                }
+            }
+
+            // 无效nums.forEach((item, index) => {
+            //     console.log('index', index, item, nums.length);
+            //     if(item === val) {
+            //         nums.splice(index, 1)
+            //     }
+            // })
+            
+            // while(nums.indexOf(val) !== -1) {
+            //     let index = nums.indexOf(val)
+            //     nums.splice(index, 1)
+            // }
+            return nums.length
+        }
+        console.log(deleteVal(nums, val));
+         * **/
+        
+
+        /* a == 1 && a == 2 && a == 3
+            // const a = {
+            //     count: 0,
+            //     toString: function() {
+            //         return ++this.count
+            //     }
+            // }
+            
+            const a = [1, 2, 3]
+            a.toString = a.shift
+            if(a == 1 && a == 2 && a == 3) {
+                console.log('ok');
+            }
+        **/
+
+        /*  对象转数组
+            let obj = {
+                1: 222,
+                2: 33,
+                5: 999
+            }
+            // [222, 33, null, null, 999, null, null, null, null, null, null, null, null]
+            // let arr = new Array(12).fill(null)
+            // arr = arr.map((item, index) => {
+            //     return obj[index + 1] || null
+            // })
+
+            // let arr = new Array(12).fill(null)
+            // Object.keys(obj).forEach((item, index) => {
+            //     arr[item - 1] = obj[item]
+            // })
+            
+            obj.length = 13
+            let arr = Array.from(obj).slice(1)
+            arr = arr.map(item => item || null)
+            console.log(arr);
+        **/
+        
+        /** 对象重定义数组方法的实例练习
+         * // [].push(1)
+            // function push(a) {
+            //     this[this.length] = a
+            //     // this.length + 1
+            //     return this.length
+            // }
+            let obj = {
+                2: 3,   // 2: 1
+                3: 4,   //3: 2
+                length: 2,  // length: 3
+                push: Array.prototype.push
+            }
+            obj.push(1)
+            // obj[obj.length] = 1  obj[2] = 1  obj.length + 1 = 3
+            obj.push(2)
+            // obj[obj.length] = 2  obj[3] = 2  obj.length + 1 = 4
+            obj.push(3)
+            // obj[obj.length] = 3  obj[4] = 3  obj.length + 1 = 5
+            console.log(obj);
+         * **/
+        
+        /** 空格替换
+         * var replaceSpace = function(str) {
+                if(!str) return str
+                return str.replace(/\s+/g, '%20')
+            }
+            const str = 'you are so nice'
+            console.log(replaceSpace(str));
+         * **/
+
+        /**任意一个重复的数字
+         * @param {number[]} nums
+         * 
+         * @return {number}
+         * 
+            var findRepeatNumber = function(nums) {
+                if(!nums.length) return
+                let set = new Set()
+                for(let i = 0; i < nums.length; i++) {
+                    if(!set.has(nums[i])) {
+                        set.add(nums[i])
+                    } else {
+                        return nums[i]
+                    }
+                }
+
+                // nums.sort()
+                // for(let i = 1; i < nums.length; i++) {
+                //     if(nums[i] === nums[i-1]) {
+                //         return nums[i]
+                //     }
+                // }
+
+                // for(let i = 0; i < nums.length; i++) {
+                //     let res = nums.slice(i+1)
+                //     if(res.indexOf(nums[i]) !== -1) {
+                //         return nums[i]
+                //     }
+                // }
+                // return number
+            };
+            let nums = [1,2,4,3,9,3]
+            console.log(findRepeatNumber(nums));
+         */
+        
+
+        // 倒计时
+        /**
+         * 
+        function show() {
+            var d1 = new Date();//获取当前时间
+            var d1Ms = d1.getTime();
+            var d2 = new Date(2022, 1, 4, 20, 0, 0);
+            var d2Ms = d2.getTime();
+            var differMs = d2Ms - d1Ms;//相差的毫秒数
+            var date = parseInt(differMs / (3600 * 24 * 1000));//天
+            var hours = parseInt((differMs % (3600 * 24 * 1000)) / (3600 * 1000));//1小时=3600s
+            var minutes = parseInt((differMs % (3600 * 1000)) / (60 * 1000));//分钟
+            var seconds = parseInt((differMs % (60 * 1000)) / 1000);//秒
+            var ms = differMs % 1000;//毫秒
+            //当前分秒为各位数字时,对其进行的处理
+            hours = hours < 10 ? "0" + hours : hours;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+            if(document.getElementById("spanTime")){
+
+                document.getElementById("spanTime").style.fontSize='40px'
+                document.getElementById("spanTime").innerHTML = "距北京2022年冬奥会" + '&nbsp;&nbsp;&nbsp;&nbsp;' + date + "天" + '&nbsp;&nbsp;' + hours + "小时" + '&nbsp;&nbsp;' + minutes + "分" + '&nbsp;&nbsp' + seconds + "秒";
+
+            }
+        }
+
+         * **/
+        
+        // longestCommonPrefix
+        /*
+            var longestCommonPrefix = function(arr) {
+                if(arr.length <= 1) return arr
+                let pre = arr[0]
+                for(let i = 1; i < arr.length; i++) {
+                    let j = 0
+                    for(; j < pre.length && j < arr[i].length; j++) {
+                        if(pre[j] !== arr[i][j]) {
+                            break
+                        }
+                    }
+                    pre = pre.substring(0, j)
+                    // pre = pre.slice(0, j)
+                }
+                return pre
+            }
+            let arr = ['flow', 'flower', 'fly']
+            console.log(longestCommonPrefix(arr));
+
+        **/
+        
+        // Number reverse
+        /**
+         * var reverse = function(x) {
+            // x是数字
+            x = isNaN(x) ? 0 : Number(x)
+            // if 0, return x directly
+            if(x === 0) return 0
+            let res = 0, sym = 0
+            // x < 0
+            if(x < 0) {
+                sym = 1
+                x = 0 - x
+            }
+            // x > 0
+            while(x) {
+                res = res * 10 + x % 10
+                x = Math.floor(x / 10)
+            }
+            if(res >= 2**31) return 0
+            res = sym === 1 ? -res : res
+            
+            return res
+        }
+        var reverseN = function(x) {
+            const border = 2**31
+            const res = (x > 0 ? 1 : -1)*x.toString().split('').filter(x => x !== '-').reverse().join('')
+            return res < -border || res > border -1 ? 0 : res
+        }
+        console.log(reverse('-q10'));
+        var reverse = function(x) {
+            let result = 0;
+            while(x !== 0) {
+                result = result * 10 + x % 10;
+                x = (x / 10) | 0;
+            }
+            return (result | 0) === result ? result : 0;
+        };
+        var reverse = function(x) {
+            const border = 2**31
+            const max = border - 1
+            const min = -border
+
+            const result = (x > 0 ? 1 : -1) * String(x).split('').filter(x => x !== '-').reverse().join('')
+            return result > max || result < min ? 0 : result 
+        };
+
+         * */
+        
+
+    </script>
+</body>
+</html>
