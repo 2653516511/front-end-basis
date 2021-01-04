@@ -8,22 +8,139 @@
 <body>
     
     <script>
-        let strStr = function(str1, str2) {
-            // str1为空：-1； str1的长度小于str2：-1
-            if(!str1 || str1.length < str2.length) return -1
-            // str2为空：0
-            if(!str2) return 0
-            // 
-            for(let i = 0; i < str1.length - str2.length + 1; i++) {
-                let tem = str1.substr(i,str2.length)
-                if(tem === str2) {
-                    return i
-                }
-            }
-            return -1
+
+        let strToString = new String('erdli j ')
+        let obj = {name: 'name1'}
+        console.log(strToString.toString());
+        console.log(String.prototype.toString.call(obj));
+
+        let str = 'ddagdsddd'
+        function minLen(str) {
+            str.split('').sort()
+
+            // str.replace(/(\w)\1+/g, (data, item) => {
+            //     console.log(data, item);
+            // })
+            // return newStr
         }
-        let str1 = 'abcded', str2 = 'cd'
-        console.log(strStr(str1, str2));
+        // console.log(minLen(str));
+
+        /** 组合数最小
+        let arr = [3,30,34,5,9]
+        let minNumber = function(arr) {
+            // boundary
+            if(arr.length < 1) return ''
+            let str = '', tem = []
+
+            str = arr.sort((a, b) => {
+                return ('' + a + b) - ('' + b + a)
+            }).join('')
+
+            // tem = arr.map(item => item + '')
+            // tem.sort((a, b) => {
+            //     if(a + b > b + a) {
+            //         return 1
+            //     } else {
+            //         return -1
+            //     }
+            // })
+            // console.log(tem);
+            // str = tem.join('')
+            
+            return str
+        }
+        console.log(minNumber(arr));
+         * **/
+        
+
+        /** 数组元素相乘
+        let arr = [1,2,3,4]
+        let getMutil = function(arr){
+            if(arr.length === 0) return []
+            let resArr = [], temp = 1
+            resArr[0] = 1
+            for(let i = 1; i < arr.length; i++) {
+                resArr[i] = resArr[i-1] * arr[i-1]
+            }
+            for(let j = arr.length -2; j >= 0; j--) {
+                temp *= arr[j+1]
+                resArr[j] *= temp
+                
+            }
+
+            return resArr
+        }
+        console.log(getMutil(arr));
+         * **/
+        
+
+        /** 数组中不重复的数
+            let singleNumbers = function(arr) {
+                if(!arr.length) {
+                    return []
+                }
+                let res1 = ''
+                arr.sort()
+                for(let i = 0; i < arr.length; i++) {
+                    if(arr[i+1] && arr[i] === arr[i+1]) {
+                        i++
+                    } else if(arr[i] !== arr[i+1]) {
+                        res1 += arr[i] + ','
+                    }
+                }
+                res1 = res1.substr(0, res1.length - 1)
+                return res1.split(',').map(item => parseInt(item))
+            }
+
+         * **/
+        
+        /** 二叉树的先序遍历
+            var pathSum = function(root, sum) {
+                // boundary
+                // if(treeNode)  if(sum)
+                if(!root) {
+                    return []
+                }
+                var res = [], arr = []
+                __pushArr(root, sum, arr, res)
+                return res
+            }
+            function __pushArr(root, curSum, arr, res) {
+                if(!root) {
+                    return
+                }
+                // 将当前的值存入arr中
+                arr = [...arr, root.val]
+
+                if(!root.left && !root.right && root.val === curSum) {
+                    res.push(arr)
+                    return;
+                }
+                __pushArr(root.left, curSum - root.val, arr, res)
+                __pushArr(root.right, curSum - root.val, arr, res)
+            }
+
+         * **/
+        
+        /** 查找一个字符串在另一个字符串中出现的位置
+            let strStr = function(str1, str2) {
+                // str1为空：-1； str1的长度小于str2：-1
+                if(!str1 || str1.length < str2.length) return -1
+                // str2为空：0
+                if(!str2) return 0
+                // 
+                for(let i = 0; i < str1.length - str2.length + 1; i++) {
+                    let tem = str1.substr(i,str2.length)
+                    if(tem === str2) {
+                        return i
+                    }
+                }
+                return -1
+            }
+            let str1 = 'abcded', str2 = 'cd'
+            console.log(strStr(str1, str2));
+         * **/
+        
 
         /** 数组查找数据
         let nums = [0,1,2,2,3,0,4,2], val = 2

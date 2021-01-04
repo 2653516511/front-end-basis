@@ -15,3 +15,15 @@ var reverse = function(x) {
     
     return res
 }
+
+// let str = '0022333999'
+// let reg = /(\w)\1+/g
+// str.replace(reg, (item, data) => {
+//     // console.log(item, data);
+// })
+
+let str = new String('erdli j ')
+console.log(str);
+
+
+
