@@ -24,6 +24,8 @@ var reverse = function(x) {
 
 let str = new String('erdli j ')
 console.log(str);
-
-
+let strToString = new String('erdli j ')
+let obj = {name: 'name1'}
+// console.log(strToString.toString());
+// console.log(String.prototype.toString.call(obj));
 

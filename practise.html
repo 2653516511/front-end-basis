@@ -8,22 +8,390 @@
 <body>
     
     <script>
+        /* js判断数组中是否包含某个值的四种方法
+        let arr = [1,2,4,3,4,65,43,2,2,1]
+        let findRes = arr.find((item, index, arr) => {
+            // 满足条件的第一个数
+            return item > 10
+        })
+        let findInd = arr.findIndex((item, index, arr) => {
+            // 满足条件的第一个数的索引
+            return item > 10
+        })
+        // 是否包含某个元素，返回true/false
+        let includesRes = arr.includes(0)
+        // 返回某个元素首次出现的位置
+        let indexof = arr.indexOf(4)
+        console.log(indexof);
+        **/
 
-        let strToString = new String('erdli j ')
-        let obj = {name: 'name1'}
-        console.log(strToString.toString());
-        console.log(String.prototype.toString.call(obj));
-
-        let str = 'ddagdsddd'
-        function minLen(str) {
-            str.split('').sort()
-
-            // str.replace(/(\w)\1+/g, (data, item) => {
-            //     console.log(data, item);
-            // })
-            // return newStr
+        /* 中途停止forEach的执行：借助try catch实现。官网上提倡用some或every替换forEach的使用
+            some是return true时触发停止；every是return false时触发停止。
+        let arr = [1,2,4,5,6,7,3]
+        try{
+            arr.forEach((item, index) => {
+                // console.log(index, item);
+                // 抛出错误的位置写的时候也有说法，只需要记住，这些都属于同步任务，js会按顺序加载执行
+                if(item > 4) {
+                    throw new Error('item > 4')
+                }
+                console.log(index, item);
+                
+            })
+        } catch(error) {
+            console.log(error);
         }
-        // console.log(minLen(str));
+        **/
+        
+
+        /* lc 16: 最接近的三数之和
+        // 16: https://leetcode-cn.com/problems/3sum-closest
+        let nums = [-1, 2, 1, -4], target = 1
+        let threeSumsCloset = function(nums, target) {
+            if(nums.length < 3) return false
+            if(nums.length === 3) {
+                return nums.reduce((sum, curItem) => sum + curItem, 0)
+            }
+            let min = 2**31, res
+            // 这里注意：a: sort排序会直接在原数组上进行排序；b: 注意负数的排序
+            nums.sort((a, b) => a - b)
+            for(let i = 0; i < nums.length - 2; i++) {
+                let j = i+1, k = nums.length - 1
+                while(j < k) {
+                    let sum = nums[i] + nums[j] + nums[k]
+                    // let dis = (sum > target) ? (sum - target) : (target - sum)
+                    // res = dis < min ? sum : res
+                    // min = Math.min(min, dis)
+                    let dis = Math.abs(sum - target)
+                    if(dis < min) {
+                        min = dis
+                        res = sum
+                    }
+                    if(sum > target) {
+                        --k
+                    } else if(sum < target) {
+                        ++j
+                    } else {
+                        return sum
+                    }
+                }
+            }
+
+            return res
+        }
+        console.log(threeSumsCloset(nums, target));
+        **/
+        
+
+        /* in   for in   hasOwnProperty   
+        function Person(){
+        };
+        Person.prototype.name = "hello";
+        Person.prototype.age = "12";
+        Person.prototype.sayName = function(){alert(this.name);};
+        
+        var p1 = new Person();
+        // Object.defineProperty(p1.__proto__,"name",{enumerable:false});
+        Object.defineProperty(p1,"name",{value: 'p1Name', enumerable:false});
+        
+        // p1.__proto__.name = 'name'
+        console.log(Person.prototype, p1);
+        console.log(p1.hasOwnProperty("name"));
+        // for(var ii in Person.prototype){
+        //     console.log(ii, Person.prototype[ii]);
+        // }
+        for(var ii in p1){
+            console.log(ii, p1[ii]);
+        }
+        **/
+
+        /* proxy的简单使用
+        var person = {
+            name: "张三"
+        };
+        handler = {
+            get(target, property){
+                if(property in target){
+                // if(target[property]) {
+                    console.log('target', target.__proto__);
+                    return target[property]
+                }else{
+                    throw new ReferenceError("Property \"" + property + "\" does not exist.")
+                }
+            }
+        }
+
+        var proxy = new Proxy(person, handler)
+
+        **/
+        
+        /* 查找表问题：两个数组的交集 利用map set
+        let intersect = function(nums1, nums2) {
+            let arrRes = []
+            let map1 = buildMap(nums1), map2 = buildMap(nums2)
+
+            for(let key of map1.keys()) {
+                let map2Has = map2.get(key)
+                if(map2Has) {
+                    let map1Has = map1.get(key)
+                    let count = Math.min(map2Has, map1Has)
+                    for(let j = 0; j < count; j++) {
+                        arrRes.push(key)
+                    }
+                }
+            }
+            return arrRes
+        }
+        let buildMap = function(arr) {
+            let map = new Map()
+            for(let i = 0; i < arr.length; i++) {
+                // 取出当前的item对应的value
+                let count = map.get(arr[i])
+                if(count) {
+                    map.set(arr[i], count+1)
+                } else {
+                    map.set(arr[i], 1)
+                }
+            }
+            return map
+        }
+        let arr1 = [2,3,3,5,6,3], arr2 = [3,3,5,7,3]
+        console.log(intersect(arr1, arr2));
+        **/
+        
+
+        /* vue中的监听数据变化的研究
+        // 还是老套路，定义一个observe方法
+        function defineReactive(data, key, val) {
+            Object.defineProperty(data, key, {
+                enumerable: true,
+                configurable: true,
+                get: function defineGet() {
+                console.log(`get key: ${key} val: ${val}`)
+                return val
+                },
+                set: function defineSet(newVal) {
+                console.log(`set key: ${key} val: ${newVal}`)
+                // 还记得我们上面讨论的闭包么
+                // 此处将新的值赋给val，保存在内存中，从而达到赋值的效果
+                val = newVal
+                }
+            })
+        }
+        function observe(data) {
+        Object.keys(data).forEach(function(key) {
+            defineReactive(data, key, data[key])
+        })
+        }
+
+        let test = [1, 2, 3]
+        // let test = {
+        //     name: 'zhang',
+        //     age: 0
+        // }
+        // 初始化
+        console.log(observe(test));
+
+        const aryMethods = ['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse'];
+        const arrayAugmentations = [];
+
+        aryMethods.forEach((method)=> {
+
+            // 这里是原生Array的原型方法
+            let original = Array.prototype[method];
+
+        // 将push, pop等封装好的方法定义在对象arrayAugmentations的属性上
+        // 注意：是属性而非原型属性
+            arrayAugmentations[method] = function () {
+                console.log('我被改变啦!');
+
+                // 调用对应的原生方法并返回结果
+                return original.apply(this, arguments);
+            };
+        });
+
+        let list = ['a', 'b', 'c'];
+        // 将我们要监听的数组的原型指针指向上面定义的空数组对象
+        // 别忘了这个空数组的属性上定义了我们封装好的push等方法
+        list.__proto__ = arrayAugmentations;
+        list.push('d');  // 我被改变啦！ 4
+
+        // 这里的list2没有被重新定义原型指针，所以就正常输出
+        let list2 = ['a', 'b', 'c'];
+        list2.push('d');  // 4
+        **/
+
+        /** 前序中序构建树
+         let preorder = [1,2], inorder = [2,1]
+        // let preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+        let buildTree = function(preorder, inorder) {
+            if(preorder.length === 0 || inorder.length === 0 || preorder.length !== inorder.length) {
+                return null
+            }
+            let node = new TreeNode()
+            let res = node
+
+            let runFn = function(preArr, inArr, node) {
+                let root = preArr[0]
+                node.val = root
+                // root在中序数组中的位置
+                let rootIndex = inArr.indexOf(root)
+                // 左右中序数组
+                let leftInArr = inArr.slice(0, rootIndex),
+                    rightInArr = inArr.slice(rootIndex + 1)
+                // 左右中序数组为空，
+                if(leftInArr.length === 0 || rightInArr.length === 0) {
+                    return
+                }
+                let leftPreArr = preArr.slice(1, leftInArr.length + 1),
+                    rightPreArr = preArr.slice(leftInArr.length + 1)
+                node.left = new TreeNode()
+                node.right = new TreeNode()
+                runFn(leftPreArr, leftInArr, node.left)
+                runFn(rightPreArr, rightInArr, node.right)
+            }
+            runFn(preorder, inorder, node)
+            return res
+        }
+        let buildTreeSec = function(preorder, inorder) {
+            // current node
+            if(!preorder.length || !inorder.length) {
+                return null
+            }
+            const curRoot = preorder[0]
+            const node = new TreeNode(curRoot)
+            let i = 0
+            for(; i < inorder.length; i++) {
+                if(inorder[i] === curRoot) {
+                    break
+                }
+            }
+            // left node
+            node.left = buildTreeSec(preorder.slice(1, i+1), inorder.slice(0, i))
+            // right node
+            node.right = buildTreeSec(preorder.slice(i+1), inorder.slice(i+1))
+            return node
+        }
+        function TreeNode(val) {
+            this.val = val
+            this.left = this.right = null
+        }
+        console.log(buildTreeSec(preorder, inorder));
+         * **/
+        
+
+        /** promise的使用，有问题
+        let fun = function(a, b) {
+            return new Promise((resolve, reject) => {
+                if(a > b) {
+                    resolve('success')
+                } else {
+                    reject('error')
+                }
+            })
+        }
+        console.log(fun(1, 0));
+         * **/
+        
+        /** 排序，冒泡、快排、插入，待补充其余
+        let arr = [17, 3, 35, 4, 20, 33]
+        let puppleSort = function (arr) {
+            // 控制比较的次数
+            for(let i = 0; i < arr.length - 1; i++) {
+                // 控制当前数组是否已有序，有序则无需继续比较，直接return即可
+                let exchange = 0
+                // 元素的比较
+                for(let j = arr.length - 1; j > i; j--) {
+                    if(arr[j] < arr[j - 1]) {
+                        [arr[j], arr[j-1]] = [arr[j-1], arr[j]]
+                        exchange = 1
+                    }
+                }
+                if(exchange === 0) {
+                    return arr
+                }
+            }
+            return arr
+        }
+        let quickSort = function(arr) {
+            let sortFn = function(curArr) {
+                if(curArr.length <= 1) return curArr
+                let left = [], right = []
+                let prior = curArr.splice(0, 1)[0]
+                for(let i = 0; i < curArr.length; i++) {
+                    let item = curArr[i]
+                    if(item >= prior) {
+                        right.push(item)
+                    } else {
+                        left.push(item)
+                    }
+                }
+                return sortFn(left).concat([prior], sortFn(right))
+            }
+            return sortFn(arr)
+        }
+        let insertSort = function(arr) {
+            // var len = arr.length,
+            //     i, j, tmp, result;
+            
+            // // 设置数组副本
+            // result = arr.slice(0);
+            // for(i=1; i < len; i++){
+            //     tmp = result[i];
+            //     j = i - 1;
+            //     while(j>=0 && tmp < result[j]){
+            //     result[j+1] = result[j];
+            //     j--;
+            //     }
+            //     result[j+1] = tmp;
+            // }
+            // return result;
+            
+            for(let i = 1; i < arr.length; i++) {
+                let j = i - 1, tem = arr[i]
+                while(j >= 0 && tem < arr[j]) {
+                    arr[j+1] = arr[j]
+                    j--
+                }
+                arr[j+1] = tem
+            }
+            return arr
+        }
+        // console.log(insertSort(arr));
+         * **/
+        
+
+        /** 链表反转
+        let head = [1,3,2]
+        var reservePrint = function(node) {
+            if(!node) return []
+            let arr = []
+            while(node !== null) {
+                arr.push(node.val)
+                node = node.next
+            }
+
+            return arr.reverse()
+        }
+        console.log(reservePrint(head));
+         * **/
+        
+
+        /** 删除字符串中只出现一次的字符
+        let str = 'ddagdsdddsaafdfvdchhyfvvgnbg'
+        function minLen(str) {
+            str = str.split('').sort().join('')
+            let newStr = ''
+
+            str.replace(/(\w)\1+/g, (data, item) => {
+                console.log(data, item);
+                newStr += data
+            })
+            return newStr
+        }
+        console.log(minLen(str));
+         * **/
+        
 
         /** 组合数最小
         let arr = [3,30,34,5,9]
