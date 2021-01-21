@@ -5,17 +5,7 @@
  - 将传递的参数中的某对象和剩余参数使用apply的方式在一个回调函数中执行即可
  - 要在第一层获取到被绑定函数的this，因为要拿到那个函数用apply
 
-```js
-/**
- * 简单版本 
- */
-Function.prototype.myBind = (that, ...args) => {
-  const funcThis = this;
-  return function(..._args) {
-    return funcThis.apply(that, args.concat(_args));
-  }
-}
-```
+
 
 ### 自封装一个apply
 
@@ -25,72 +15,46 @@ Function.prototype.myBind = (that, ...args) => {
  - 执行 传入对象.fn(传入参数)
  - 返回执行结果
 
+https://github.com/mqyqingfeng/Blog/issues/12
 ```js
-Function.prototype.myApply = function(context) {
-  if (typeof this !== 'function') {
-    throw new TypeError('Error')
-  }
-  context = context || window
-  context.fn = this
-  let result
-  // 处理参数和 call 有区别
-  if (arguments[1]) {
-    result = context.fn(...arguments[1])
-  } else {
-    result = context.fn()
-  }
-  delete context.fn
-  return result
-}
-```
+function myCall(ctx) {
+    var ctx = ctx || window
+    ctx.fn = this
+    let args = []
 
-call实现
-```js
-function callTest(context) {
-  var context = context || window
-  context.fn = this //fn是对象的属性名，最后要删除，所以无所谓什么名字
-
-  var result, arg = []
-  for(let i = 1; i<arguments.length; i++) {
-    arg.push('argument[' + i + ']')
-  }
-  result = context.fn(...arg)
-  delete context.fn
-  return result
-}
-```
-apply实现
-```js
-function applyTest(context, arr) {
-  var context = context || window
-  context.fn = this
-  var result
-  if(!arr) {
-    result = context.fn()
-  } else {
-    var arg = []
-    for(let i = 1; i < arr.length; i++) {
-      arg.push('arr[' + i + ']')
+    for(let i = 1; i < arguments.length; i++) {
+        args.push('arguments[' + i + ']')
     }
-    result = context.fn(...arg)
-  }
-  delete context.fn
-  return result
+    let res = eval('ctx.fn(' + args + ')')
+    delete ctx.fn
+    return res
 }
-```
 
-bind实现
-```js
-function bindTest(context) {
-  var context = context || window
-  var self = this
-  var arg = Array.prototype.slice.call(arguments, 1)
-  var bindFun = function () {
-    var bindArg = Array.prototype.slice.call(arguments)
-    self.apply(this instanceof self ? this:context, arg.concat(bindArg))
-  }
-  bindFun.prototype = this.prototype
-  return bindFun
+function myApply(ctx, arr) {
+    var ctx = ctx || window, arr = arr || []
+    ctx.fn = this
+    let args = []
+    for(let i = 0; i < arr.length; i++) {
+        args.push('arr[' + i + ']')
+    }
+    let res = eval('ctx.fn(' + args + ')')
+    delete ctx.fn
+    return res
+}
+fn.bind(this, q)()
+function myBin(ctx) {
+    var ctx = ctx || window
+    let self = this
+    let args = []
+    args = [].slice.call(arguments, 1)
+    let temp = function(){}
+    let resBind = function() {
+        let argsT = Array.prototype.slice.call(arguments)
+        return self.apply(this instanceof temp ? this : ctx, args.concat(argsT))
+    }
+    temp.prototype = this.prototype
+    resBind.prototype = new temp()
+    return resBind
 }
 ```
 

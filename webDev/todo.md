@@ -2,6 +2,39 @@
 [CSS像素、物理像素、逻辑像素、设备像素比、PPI、Viewport](https://github.com/jawil/blog/issues/21)
 [屏幕尺寸，分辨率，像素，PPI之间到底什么关系](https://www.jianshu.com/p/c3387bcc4f6e)
 
+致谢
+
+在我看来,面试并不是一个人的战斗。站在巨人的肩膀上,可以加快你前进的速度。感谢这一路上,直接或间接给我帮助的大佬们,排名不分先后。
+磐冲, 曾多次参加磐冲大佬组织的直播面试,表示受益良多。
+张仁阳, 珠峰架构公开课诸多知识点面试命中
+若川, 源码系列收获颇丰
+ssh,  react性能优化方案,多次面试命中
+神三元，灵魂之问系列查漏补缺
+卡颂,react源码系列，多次面试命中
+阿紫, 鼓励君+祝福小天使
+大月, 经历很相似的战友，抱团取暖
+相关链接
+
+红宝书第四版:https://www.ituring.com.cn/book/2472
+js灵魂之问(上):https://juejin.cn/post/6844903974378668039
+js灵魂之问(中):https://juejin.cn/post/6844903986479251464
+js灵魂之问(下):https://juejin.cn/post/6844904004007247880
+css世界:https://www.cssworld.cn/
+flex小青蛙:http://flexboxfroggy.com/
+flex阮一峰博客:http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html
+卡颂的react技术揭秘:https://react.iamkasong.com/
+若川的源码系列:https://juejin.cn/user/1415826704971918/posts
+难凉热血的vue源码分析:https://nlrx-wjc.github.io/Learn-Vue-Source-Code/
+数据结构与算法之美:https://time.geekbang.org/column/intro/100017301
+政采云团队的博客--算法篇:https://101.zoo.team/
+天天的前端算法总结:https://juejin.cn/post/6900698814093459463
+ssh的前端算法进阶指南:https://juejin.cn/post/6847009772500156429
+修言算法小册:https://juejin.cn/book/6844733800300150797
+谢希仁的计算机网络:https://item.jd.com/12219883.html
+神三元的http灵魂之问:https://juejin.cn/post/6844904100035821575
+浏览器专栏:https://time.geekbang.org/column/intro/100033601
+nginx笔记:https://blog.csdn.net/qq_42813491/article/details/103117799?ops_request_misc=%25257B%252522request%25255Fid%252522%25253A%252522160938095216780302981460%252522%25252C%252522scm%252522%25253A%25252220140713.130102334.pc%25255Fblog.%252522%25257D&request_id=160938095216780302981460&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_v2~rank_v29-1-103117799.pc_v2_rank_blog_default&utm_term=nginx
+linux笔记:https://blog.csdn.net/qq_42813491/article/details/88379799
 
 
 
