@@ -29,3 +29,7 @@ let obj = {name: 'name1'}
 // console.log(strToString.toString());
 // console.log(String.prototype.toString.call(obj));
 
+const a = {val: 2}
+a.target = a
+let b = JSON.parse(JSON.stringify(a))
+console.log(b);

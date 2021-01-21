@@ -8,6 +8,96 @@
 <body>
     
     <script>
+        /* map的实现 
+        **/
+        Array.prototype.myMap = function(callbackFn, thisArg) {
+            // 判断条件
+            // this必须是一个数组
+            if(this === null || this === undefined) {
+                throw new Error("Cannot read property of 'map' of null or undefined")
+            }
+            if(this && Object.prototype.toString.call(this) !== '[object Array]') {
+                throw new Error('Invalid or unexcepted token')
+            }
+            // 处理回调函数
+            if(Object.prototype.toString.call(callbackFn) !== "[object Function]") {
+                throw new Error(callbackFn + ' is not a function')
+            }
+
+            // ecma262草案中，规定，将this转换为对象
+            let O = To_Object(this)
+            let T = thisArg
+
+            let len = O.length >>> 0
+            let resAr = new Array(len)
+            for(let k = 0; k < len; k++) {
+                // in 在原型链上查找
+                if(k in o) {
+                    let kValue = O[k]
+                    let mapValue = callbackFn.call(T, kValue, k, O)
+                    resAr[k] = mapValue
+                }
+            }
+
+            return resAr
+        }
+        Array.prototype.myReduce = function(callbackFn, initialValue) {
+            // 数组类型异常
+            if(this === null || this === undefined) {
+                throw new Error("Cannot read the property 'reduce' of null or undefined")
+            }
+            if(this && Object.prototype.toString.call(this) !== '[object Array]') {
+                throw new Error("Invalid or unexpected token")
+            }
+            // 回调函数类型异常
+            if(callbackFn && Object.prototype.toString.call(callbackFn) !== '[object Function]') {
+                throw new Error(callbackFn + " is not a function")
+            }
+            // 拿到this和initialValue
+            let O = To_Object(this)    // 这块内容是将this转换成对象，以便后面使用for in进行循环
+            let len = O.length >>> 0
+            let accumulatorVal = initialValue
+            let k = 0
+            // 如果初始值为空，把数组中的第一个数赋给保存计算结果变量
+            if(accumulatorVal === undefined) {      //这里直接是undefined，不是'undefined'(这是个字符串)
+                // accumulatorVal = O[k]
+                // k++
+                for(; k <len; k++) {
+                    // 查找原型链
+                    if(k in O) {
+                        accumulatorVal = O[k]
+                        k++
+                        break
+                    }
+                }
+            }
+            // 数组全为空
+            if(k === len && accumulatorVal === undefined) {
+                throw new Error("Each element of the array is empty")
+            }
+            for(; k < len; k++) {
+                if(k in O) {
+                    accumulatorVal = callbackFn.call(null, accumulatorVal, O[k], k, O)
+                }
+            }
+            return accumulatorVal
+        }
+
+        /* 数组扁平化
+        let ary = [1, [2, [3, [4, 5]]], 6]
+        // 方法1： 使用es6提供的数组新增的方法flat
+        let flatRes = ary.flat(Infinity)
+        // 方法2： 首先，调用toString()方法，将数组转换成字符串，然后处理成数组
+        // let flatRes = ary.toString().split(',').map(item => parseInt(item))
+        // 方法3： 使用正则，将所有的[]替换掉，剩余的是数字字符，然后进行处理
+        // let flatRes = ary.join(',').replace(/\[|\]/g, '').split(',').map(item => Number(item))
+        // 方法4： 利用some判断当前的项是否是数组
+        // while(ary.some(Array.isArray)) {
+        //     ary = [].concat(...ary)
+        // }
+        console.log(flatRes);
+        **/
+
         /* js判断数组中是否包含某个值的四种方法
         let arr = [1,2,4,3,4,65,43,2,2,1]
         let findRes = arr.find((item, index, arr) => {
