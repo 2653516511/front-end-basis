@@ -17,9 +17,7 @@ function compose(funcs) {
       throw new TypeError('Expected function');
     }
   }
-
   return function (...args) {
-
     let result =  funcs[index](...args) // 第一次
     while(--index >= 0) {
       result = funcs[index](result)
