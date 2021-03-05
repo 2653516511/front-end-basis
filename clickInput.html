@@ -13,7 +13,7 @@
 
         const btn = document.querySelector('button')
         console.log(btn.style.display);
-        btn.addEventListener('click', clickfn, false)
+        // btn.addEventListener('click', clickfn, false)
         function clickfn() {
             btn.style.visibility = 'hidden'
             // btn.style.display = 'none'
@@ -27,7 +27,7 @@
 
         const inpEv = document.querySelector('input')
         // console.log('inp', inpEv);
-        inpEv.addEventListener('input', th(fn, 1000, {start: false, tail: true}), false)
+        inpEv.addEventListener('input', th(fn, 1000, {start: true, tail: false}), false)
 
         let count = 0, timeout = null
         let oldTime = 0
